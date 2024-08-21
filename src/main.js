@@ -11,13 +11,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* Import des icônes de type 'solid' */
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 /* Import de l'icône de type 'regular' */
 import { faPlusSquare, faUser } from '@fortawesome/free-regular-svg-icons'
 
 /* Ajout de ces icônes à la bibliothèque de votre projet */
-library.add(faSearch, faPlusSquare, faUser)
+library.add(faSearch, faPlusSquare, faUser, faCircle)
 
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)
 
