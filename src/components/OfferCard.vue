@@ -1,9 +1,14 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 import { computed } from 'vue'
 
 const props = defineProps({
   offerInfos: {
     type: Object,
+    required: true
+  },
+  id: {
+    type: Number,
     required: true
   }
 })
@@ -14,7 +19,7 @@ const date = computed(() => {
 </script>
 
 <template>
-  <div class="offerCard">
+  <RouterLink :to="{ name: 'offer', params: { id: id } }" class="offerCard">
     <div class="partOne">
       <div>
         <img
@@ -33,7 +38,7 @@ const date = computed(() => {
       <p>{{ date }}</p>
       <font-awesome-icon :icon="['far', 'heart']" />
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style scoped>
@@ -56,7 +61,6 @@ const date = computed(() => {
 .partOne > p {
   margin: 5px 0;
   font-weight: bold;
-  font-size: 18px;
 }
 .partOne > div img {
   height: 30px;
@@ -74,5 +78,13 @@ const date = computed(() => {
 .partTwo {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+svg {
+  font-size: 20px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
 }
 </style>

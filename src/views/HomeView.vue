@@ -56,6 +56,7 @@ onMounted(async () => {
           v-for="offer in offersList.data"
           :key="offer.id"
           :offerInfos="offer.attributes"
+          :id="offer.id"
         />
       </div>
     </div>
