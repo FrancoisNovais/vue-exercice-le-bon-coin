@@ -2,6 +2,7 @@
 // Import du package 'axios'
 import OfferCard from '@/components/offerCard.vue'
 import axios from 'axios'
+import AddOffer from '@/components/AddOffer.vue'
 
 // Import du hook
 import { onMounted, ref } from 'vue'
@@ -39,8 +40,7 @@ onMounted(async () => {
         <img src="../assets/onde-corail.svg" alt="Onde corail" />
         <div>
           <p>C'est le moment de vendre</p>
-
-          <button><font-awesome-icon :icon="['far', 'plus-square']" />Déposser une annonce</button>
+          <AddOffer />
         </div>
         <img src="../assets/feuille-bleue.svg" alt="Feuille bleue" />
       </div>
@@ -66,14 +66,20 @@ onMounted(async () => {
 <style scoped>
 .topLine {
   text-align: center;
-  margin: 20px 0;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 30px 0;
 }
 .bannerAddOffers {
   display: flex;
   justify-content: space-between;
-  background-color: #ffe9de;
+  background-color: var(--orange-pale);
   border-radius: 15px;
   margin-bottom: 20px;
+}
+.bannerAddOffers p {
+  font-size: 20px;
+  font-weight: bold;
 }
 .bannerAddOffers > div {
   display: flex;

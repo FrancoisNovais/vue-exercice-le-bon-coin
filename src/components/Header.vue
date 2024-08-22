@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import AddOffer from '@/components/AddOffer.vue'
 </script>
 <template>
   <header>
@@ -11,11 +12,10 @@ import { RouterLink } from 'vue-router'
           </RouterLink>
         </div>
         <div class="middle-part">
-          <button><font-awesome-icon :icon="['far', 'plus-square']" />Déposser une annonce</button>
-          <div>
-            <input type="text" placeholder="Rechercher sur leboncoin" />
-            <font-awesome-icon :icon="['fas', 'search']" />
-          </div>
+          <AddOffer />
+
+          <input type="text" placeholder="Rechercher sur leboncoin" />
+          <font-awesome-icon :icon="['fas', 'search']" />
         </div>
         <div class="right-part">
           <div>
@@ -51,7 +51,7 @@ import { RouterLink } from 'vue-router'
 </template>
 <style scoped>
 header {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--black);
   height: var(--header-height);
 }
 .container {
@@ -74,6 +74,8 @@ header {
 }
 .middle-part {
   display: flex;
+  align-items: center;
+  gap: 20px;
 }
 .right-part > div {
   display: flex;
@@ -86,5 +88,16 @@ img {
 }
 #circle {
   font-size: 3px;
+}
+input {
+  padding: 8px;
+  border: none;
+}
+.middle-part svg {
+  background-color: var(--orange);
+  padding: 8px;
+  box-sizing: content-box;
+  border-radius: 7px;
+  color: white;
 }
 </style>
