@@ -1,10 +1,14 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
 <template>
   <header>
     <div class="container">
       <div class="top-header">
         <div>
-          <img src="../assets/logo.svg" alt="Logo Leboncoin" />
+          <RouterLink :to="{ name: 'home' }"
+            ><img src="../assets/logo.svg" alt="Logo Leboncoin" />
+          </RouterLink>
         </div>
         <div class="middle-part">
           <button><font-awesome-icon :icon="['far', 'plus-square']" />Déposser une annonce</button>

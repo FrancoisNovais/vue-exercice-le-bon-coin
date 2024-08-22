@@ -1,7 +1,81 @@
-<script setup></script>
+<script setup>
+// Import du package 'axios'
+import axios from 'axios'
+
+// Import du hook
+import { onMounted, ref } from 'vue'
+
+// Initialisation de la valeur réactive à un object vide
+const offersList = ref({})
+
+onMounted(async () => {
+  try {
+    //  Destruction de la clé 'data'. Pour rappel, les données reçus d'une requête faite avec axios se trouve toujours à la clé 'data'
+    const { data } = await axios.get(
+      `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers`
+    )
+
+    // Visualisation des données reçus dans la console du navigateur
+    console.log('Data >>>', data)
+
+    // Transmission des données à la valeur réactive 'offersList'
+    offersList.value = data
+  } catch (error) {
+    // Visualisation de l'erreur dans la console du navigateur
+    console.log('catch >>>', error)
+  }
+})
+</script>
 
 <template>
   <main>
-    <p>Home Page</p>
+    <div class="container">
+      <p class="topLine">
+        Des millions de petites annoces et autant d'occasions de se faire plaisir
+      </p>
+
+      <div class="bannerAddOffers">
+        <img src="../assets/onde-corail.svg" alt="Onde corail" />
+        <div>
+          <p>C'est le moment de vendre</p>
+
+          <button><font-awesome-icon :icon="['far', 'plus-square']" />Déposser une annonce</button>
+        </div>
+        <img src="../assets/feuille-bleue.svg" alt="Feuille bleue" />
+      </div>
+
+      <!-- SI la valeur reactive est un tableau vide, alors nous affichons le texte "En cours de chargement..." -->
+      <p v-if="offersList.length === 0">En cours de chargement ...</p>
+
+      <!-- SINON nous affichons la liste -->
+      <div v-else>
+        <div v-for="post in offersList.data">test</div>
+      </div>
+    </div>
   </main>
 </template>
+
+<style scoped>
+.topLine {
+  text-align: center;
+  margin: 20px 0;
+}
+.bannerAddOffers {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffe9de;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+.bannerAddOffers > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+img:first-child {
+  border-radius: 15px 0 0 15px;
+}
+img:last-child {
+  border-radius: 0 15px 15px 0;
+}
+</style>
