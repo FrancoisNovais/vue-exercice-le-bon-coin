@@ -1,6 +1,20 @@
 @import './base.css';
 @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Play:wght@400;700&family=Playpen+Sans:wght@100..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&family=Varela+Round&display=swap');
 
+:root {
+  --orange: #ec5a13;
+  --orange-pale: #ffe9de;
+  --black: #152233;
+  --grey: #627c93;
+  --grey-med: #e6eaee;
+  --grey-light: #f4f9fe;
+  --blue-dark: #094171;
+  --brown: #89380f;
+  --green: #4e9850;
+  --header-height: 110px;
+  --footer-height: 80px;
+}
+
 body {
   font-family: 'Nunito', sans-serif;
 }

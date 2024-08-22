@@ -52,6 +52,14 @@ import { RouterLink } from 'vue-router'
 <style scoped>
 header {
   border-bottom: 1px solid black;
+  height: var(--header-height);
+}
+.container {
+  height: 100%;
+  padding: 10px 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .top-header {
   display: flex;
@@ -71,6 +79,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 5px;
 }
 img {
   width: 140px;

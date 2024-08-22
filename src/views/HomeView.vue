@@ -49,8 +49,9 @@ onMounted(async () => {
       <p v-if="offersList.length === 0">En cours de chargement ...</p>
 
       <!-- SINON nous affichons la liste -->
-      <div v-else>
+      <div v-else class="offers">
         <!-- Appel du composant offerCart -->
+
         <OfferCard
           v-for="offer in offersList.data"
           :key="offer.id"
@@ -83,5 +84,10 @@ img:first-child {
 }
 img:last-child {
   border-radius: 0 15px 15px 0;
+}
+.offers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 15px;
 }
 </style>
