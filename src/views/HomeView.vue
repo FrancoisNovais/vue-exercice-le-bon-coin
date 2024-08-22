@@ -1,5 +1,6 @@
 <script setup>
 // Import du package 'axios'
+import OfferCard from '@/components/offerCard.vue'
 import axios from 'axios'
 
 // Import du hook
@@ -12,7 +13,7 @@ onMounted(async () => {
   try {
     //  Destruction de la clé 'data'. Pour rappel, les données reçus d'une requête faite avec axios se trouve toujours à la clé 'data'
     const { data } = await axios.get(
-      `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers`
+      `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=pictures&populate[1]=owner.avatar`
     )
 
     // Visualisation des données reçus dans la console du navigateur
@@ -49,7 +50,12 @@ onMounted(async () => {
 
       <!-- SINON nous affichons la liste -->
       <div v-else>
-        <div v-for="post in offersList.data">test</div>
+        <!-- Appel du composant offerCart -->
+        <OfferCard
+          v-for="offer in offersList.data"
+          :key="offer.id"
+          :offerInfos="offer.attributes"
+        />
       </div>
     </div>
   </main>
