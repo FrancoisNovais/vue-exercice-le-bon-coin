@@ -7,8 +7,8 @@ import AddOffer from '@/components/AddOffer.vue'
     <div class="container">
       <div class="top-header">
         <div>
-          <RouterLink :to="{ name: 'home' }"
-            ><img src="../assets/logo.svg" alt="Logo Leboncoin" />
+          <RouterLink :to="{ name: 'home' }">
+            <img src="../assets/logo.svg" alt="Logo Leboncoin" />
           </RouterLink>
         </div>
         <div class="middle-part">
@@ -53,6 +53,9 @@ import AddOffer from '@/components/AddOffer.vue'
 header {
   border-bottom: 1px solid var(--black);
   height: var(--header-height);
+  position: sticky;
+  top: 0;
+  background-color: white;
 }
 .container {
   height: 100%;

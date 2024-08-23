@@ -25,6 +25,11 @@ const date = computed(() => {
   return offerInfos.value.data.attributes.updatedAt.split('T')[0].split('-').reverse().join('/')
 })
 
+// Mise en forme du prix
+const price = computed(() => {
+  return Intl.NumberFormat().format(offerInfos.value.data.attributes.price)
+})
+
 onMounted(async () => {
   try {
     //  Destruction de la clé 'data'. Pour rappel, les données reçus d'une requête faite avec axios se trouve toujours à la clé 'data'
@@ -51,7 +56,7 @@ onMounted(async () => {
         <div class="partOne">
           <img :src="offerInfos.data.attributes.pictures.data[0].attributes.url" />
           <h1>{{ offerInfos.data.attributes.title }}</h1>
-          <p id="price">{{ offerInfos.data.attributes.price }} €</p>
+          <p id="price">{{ price }} €</p>
           <p id="date">{{ date }}</p>
           <h2>Description</h2>
           <p>{{ offerInfos.data.attributes.description }}</p>
@@ -91,9 +96,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.container {
-  margin-top: 20px;
-}
 .offer {
   display: flex;
 }
@@ -173,13 +175,8 @@ img {
   width: 300px;
 }
 .blanckAvatar {
-  width: 30px;
-  height: 30px;
-  background-color: lightgrey;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
+  width: 65px;
+  height: 65px;
 }
 #identity {
   font-size: 14px;

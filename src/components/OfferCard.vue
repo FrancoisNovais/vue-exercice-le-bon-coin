@@ -13,8 +13,19 @@ const props = defineProps({
   }
 })
 
+// Récuperation de la premiére lettre de l'username pour avatar par défaut
+const blanckAvatar = computed(() => {
+  return props.offerInfos.owner.data.attributes.username.substr(0, 1).toUpperCase()
+})
+
+// Mise en forme de la date
 const date = computed(() => {
   return props.offerInfos.updatedAt.split('T')[0].split('-').reverse().join('/')
+})
+
+// Mise en forme du prix
+const price = computed(() => {
+  return Intl.NumberFormat().format(props.offerInfos.price)
 })
 </script>
 
@@ -22,17 +33,16 @@ const date = computed(() => {
   <RouterLink :to="{ name: 'offer', params: { id: id } }" class="offerCard">
     <div class="partOne">
       <div>
-        <img
-          :src="offerInfos.owner.data.attributes.avatar.data.attributes.url"
-          alt=""
-          v-if="offerInfos.owner.data.attributes.avatar.data"
-        />
+        <div class="blanckAvatar" v-if="offerInfos.owner.data.attributes.avatar.data === null">
+          <p>{{ blanckAvatar }}</p>
+        </div>
+        <img v-else :src="offerInfos.owner.data.attributes.avatar.data.attributes.url" alt="" />
         <p>{{ offerInfos.owner.data.attributes.username }}</p>
       </div>
 
       <img :src="offerInfos.pictures.data[0].attributes.url" :alt="offerInfos.title" />
       <p>{{ offerInfos.title }}</p>
-      <p>{{ offerInfos.price }} €</p>
+      <p>{{ price }} €</p>
     </div>
     <div class="partTwo">
       <p>{{ date }}</p>
