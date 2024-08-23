@@ -15,8 +15,14 @@ const props = defineProps({
 // Initialisation de la valeur réactive
 const offerInfos = ref(null)
 
+// Récuperation de la premiére lettre de l'username pour avatar par défaut
 const blanckAvatar = computed(() => {
   return offerInfos.value.data.attributes.owner.data.attributes.username.substr(0, 1).toUpperCase()
+})
+
+// Mise en forme de la date
+const date = computed(() => {
+  return offerInfos.value.data.attributes.updatedAt.split('T')[0].split('-').reverse().join('/')
 })
 
 onMounted(async () => {
@@ -27,13 +33,13 @@ onMounted(async () => {
     )
 
     // Visualisation des données reçus dans la console du navigateur
-    console.log('Data >>>', data)
+    console.log('Data OfferView >>>', data)
 
     // Transmission des données à la valeur réactive 'offersList'
     offerInfos.value = data
   } catch (error) {
     // Visualisation de l'erreur dans la console du navigateur
-    console.log('catch >>>', error)
+    console.log('catch OfferView >>>', error)
   }
 })
 </script>
@@ -44,12 +50,14 @@ onMounted(async () => {
       <div class="offer" v-else>
         <div class="partOne">
           <img :src="offerInfos.data.attributes.pictures.data[0].attributes.url" />
-          <p>{{ offerInfos.data.attributes.title }}</p>
-          <p>{{ offerInfos.data.attributes.price }} €</p>
-          <p>{{ offerInfos.data.attributes.updatedAt }}</p>
-          <p>Description</p>
+          <h1>{{ offerInfos.data.attributes.title }}</h1>
+          <p id="price">{{ offerInfos.data.attributes.price }} €</p>
+          <p id="date">{{ date }}</p>
+          <h2>Description</h2>
           <p>{{ offerInfos.data.attributes.description }}</p>
-          <p>Agon-Coutainville (50230)</p>
+          <p id="city">
+            <font-awesome-icon :icon="['fas', 'map-pin']" /> Agon-Coutainville (50230)
+          </p>
         </div>
         <div class="partTwo">
           <div>
@@ -67,8 +75,10 @@ onMounted(async () => {
               />
               <p>{{ offerInfos.data.attributes.owner.data.attributes.username }}</p>
             </div>
-            <p>Pièce d'identité vérifiée</p>
-            <p>Répond généralement en 1 heure</p>
+            <p id="identity">
+              <font-awesome-icon :icon="['fas', 'check-double']" /> Pièce d'identité vérifiée
+            </p>
+            <p><font-awesome-icon :icon="['far', 'clock']" /> Répond généralement en 1 heure</p>
           </div>
           <div>
             <button>Acheter</button>
@@ -96,8 +106,39 @@ onMounted(async () => {
   object-fit: contain;
 }
 
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+#price {
+  font-size: 18px;
+  font-weight: bold;
+}
+#date {
+  font-size: 12px;
+  margin-top: 20px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 50px 0 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--grey-med);
+}
+#city {
+  border-top: 1px solid var(--grey-med);
+  margin: 50px 0 25px;
+  padding-top: 20px;
+}
 .partTwo {
   width: 35%;
+  height: 375px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .partTwo img {
@@ -123,6 +164,11 @@ onMounted(async () => {
   display: flex;
   gap: 10px;
 }
+.partTwo > div > div p {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
 img {
   width: 300px;
 }
@@ -134,6 +180,14 @@ img {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+}
+#identity {
+  font-size: 14px;
+  color: var(--brown);
+  background-color: var(--orange-pale);
+  border-radius: 10px;
+  padding: 4px 7px;
+  align-self: flex-start;
 }
 button {
   border: none;
