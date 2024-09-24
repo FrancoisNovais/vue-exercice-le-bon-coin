@@ -1,7 +1,7 @@
 <script setup>
 // Import du package 'axios'
 import axios from 'axios'
-import OfferCard from '@/components/offerCard.vue'
+import OfferCard from '@/components/OfferCard.vue'
 import AddOffer from '@/components/AddOffer.vue'
 
 // Import du hook
