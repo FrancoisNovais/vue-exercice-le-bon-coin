@@ -13,7 +13,7 @@ const router = createRouter({
     {
       path: '/offer/:id',
       name: 'offer',
-      component: OfferView,
+      component: () => import('../views/OfferView.vue'),
       props: true
     }
   ]

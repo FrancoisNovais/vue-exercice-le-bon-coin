@@ -14,7 +14,7 @@ import AddOffer from '@/components/AddOffer.vue'
         <div class="middle-part">
           <AddOffer />
 
-          <input type="text" placeholder="Rechercher sur leboncoin" />
+          <input name="Rechercher" type="text" placeholder="Rechercher sur leboncoin" />
           <font-awesome-icon :icon="['fas', 'search']" />
         </div>
         <div class="right-part">

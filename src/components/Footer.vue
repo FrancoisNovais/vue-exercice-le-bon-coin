@@ -1,6 +1,9 @@
 <template>
   <footer>
-    <p>Made by François with Vue.js</p>
+    <p>
+      Made by <a href="https://github.com/FrancoisNovais">François</a> with
+      <a href="https://vuejs.org/">Vue.js</a>
+    </p>
   </footer>
 </template>
 

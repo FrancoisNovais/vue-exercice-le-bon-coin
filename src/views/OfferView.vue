@@ -5,15 +5,15 @@ import axios from 'axios'
 // Import du hook
 import { onMounted, ref, computed } from 'vue'
 
+// Import 'useCycleList'
+import { useCycleList } from '@vueuse/core'
+
 const props = defineProps({
   id: {
     type: String,
     required: true
   }
 })
-
-// Initialisation de la valeur réactive
-const offerInfos = ref(null)
 
 // Récuperation de la premiére lettre de l'username pour avatar par défaut
 const blanckAvatar = computed(() => {
@@ -29,6 +29,9 @@ const date = computed(() => {
 const price = computed(() => {
   return Intl.NumberFormat().format(offerInfos.value.data.attributes.price)
 })
+
+// Initialisation de la valeur réactive
+const offerInfos = ref(null)
 
 onMounted(async () => {
   try {
@@ -47,6 +50,12 @@ onMounted(async () => {
     console.log('catch OfferView >>>', error)
   }
 })
+
+const cyclelist = computed(() => {
+  const { state, next, prev } = useCycleList(offerInfos.value.data.attributes.pictures.data)
+
+  return { state, next, prev }
+})
 </script>
 <template>
   <main>
@@ -54,7 +63,12 @@ onMounted(async () => {
       <p v-if="offerInfos === null">En cours de chargement ...</p>
       <div class="offer" v-else>
         <div class="partOne">
-          <img :src="offerInfos.data.attributes.pictures.data[0].attributes.url" />
+          <div class="offerImages">
+            <font-awesome-icon :icon="['fas', 'angle-left']" @click="cyclelist.prev()" />
+
+            <img :src="cyclelist.state.value.attributes.url" />
+            <font-awesome-icon :icon="['fas', 'angle-right']" @click="cyclelist.next()" />
+          </div>
           <h1>{{ offerInfos.data.attributes.title }}</h1>
           <p id="price">{{ price }} €</p>
           <p id="date">{{ date }}</p>
@@ -98,11 +112,21 @@ onMounted(async () => {
 <style scoped>
 .offer {
   display: flex;
+  gap: 20px;
 }
 .partOne {
   width: 65%;
 }
-.partOne img {
+.offerImages {
+  display: flex;
+  align-items: center;
+}
+.offerImages svg {
+  font-size: 25px;
+  cursor: pointer;
+  color: var(--grey);
+}
+.offerImages img {
   width: 100%;
   height: 350px;
   object-fit: contain;
