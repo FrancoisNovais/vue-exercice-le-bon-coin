@@ -41,7 +41,7 @@ onMounted(async () => {
       <TimeToSell />
 
       <!-- SI la valeur reactive est un tableau vide, alors nous affichons le texte "En cours de chargement..." -->
-      <p v-if="offersList.length === 0">En cours de chargement ...</p>
+      <p v-if="!offersList.data">En cours de chargement ...</p>
 
       <!-- SINON nous affichons la liste -->
       <div v-else class="offers">

@@ -13,9 +13,10 @@ import AddOffer from '@/components/AddOffer.vue'
         </div>
         <div class="middle-part">
           <AddOffer />
-
-          <input name="Rechercher" type="text" placeholder="Rechercher sur leboncoin" />
-          <font-awesome-icon :icon="['fas', 'search']" />
+          <div>
+            <input name="Rechercher" type="text" placeholder="Rechercher sur leboncoin" />
+            <font-awesome-icon :icon="['fas', 'search']" />
+          </div>
         </div>
         <div class="right-part">
           <div>
@@ -77,8 +78,34 @@ header {
 }
 .middle-part {
   display: flex;
-  align-items: center;
+
   gap: 20px;
+}
+.middle-part > div {
+  display: flex;
+  align-items: center;
+  background-color: var(--grey-light);
+  padding: 7px;
+  border-radius: 10px;
+}
+input {
+  width: 250px;
+  padding: 8px;
+  border: none;
+  background-color: var(--grey-light);
+}
+input:focus {
+  outline: none;
+}
+input::placeholder {
+  color: var(--black);
+}
+.middle-part svg {
+  background-color: var(--orange);
+  padding: 8px;
+  box-sizing: content-box;
+  border-radius: 7px;
+  color: white;
 }
 .right-part > div {
   display: flex;
@@ -91,16 +118,5 @@ img {
 }
 #circle {
   font-size: 3px;
-}
-input {
-  padding: 8px;
-  border: none;
-}
-.middle-part svg {
-  background-color: var(--orange);
-  padding: 8px;
-  box-sizing: content-box;
-  border-radius: 7px;
-  color: white;
 }
 </style>

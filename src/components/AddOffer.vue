@@ -5,10 +5,12 @@
 button {
   background-color: var(--orange);
   color: white;
-  padding: 10px;
+  padding: 7px 10px 7px 10px;
   border: none;
   border-radius: 10px;
   font-weight: bold;
+  font-family: inherit;
+  font-size: inherit;
 }
 svg {
   margin-right: 10px;
