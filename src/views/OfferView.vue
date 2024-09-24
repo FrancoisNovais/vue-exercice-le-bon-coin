@@ -30,6 +30,17 @@ const price = computed(() => {
   return Intl.NumberFormat().format(offerInfos.value.data.attributes.price)
 })
 
+//  Carrousel d'images
+const cyclelist = computed(() => {
+  if (offerInfos.value.data.attributes.pictures.data) {
+    const { state, next, prev } = useCycleList(offerInfos.value.data.attributes.pictures.data)
+
+    return { state, next, prev }
+  } else {
+    return {}
+  }
+})
+
 // Initialisation de la valeur réactive
 const offerInfos = ref(null)
 
@@ -50,12 +61,6 @@ onMounted(async () => {
     console.log('catch OfferView >>>', error)
   }
 })
-
-const cyclelist = computed(() => {
-  const { state, next, prev } = useCycleList(offerInfos.value.data.attributes.pictures.data)
-
-  return { state, next, prev }
-})
 </script>
 <template>
   <main>
@@ -64,10 +69,22 @@ const cyclelist = computed(() => {
       <div class="offer" v-else>
         <div class="partOne">
           <div class="offerImages">
-            <font-awesome-icon :icon="['fas', 'angle-left']" @click="cyclelist.prev()" />
+            <font-awesome-icon
+              :icon="['fas', 'angle-left']"
+              @click="cyclelist.prev()"
+              v-if="offerInfos.data.attributes.pictures.data?.length > 1"
+            />
 
-            <img :src="cyclelist.state.value.attributes.url" />
-            <font-awesome-icon :icon="['fas', 'angle-right']" @click="cyclelist.next()" />
+            <img
+              :src="cyclelist.state.value.attributes.url"
+              :alt="offerInfos.data.attributes.title"
+              v-if="cyclelist.state"
+            />
+            <font-awesome-icon
+              :icon="['fas', 'angle-right']"
+              @click="cyclelist.next()"
+              v-if="offerInfos.data.attributes.pictures.data?.length > 1"
+            />
           </div>
           <h1>{{ offerInfos.data.attributes.title }}</h1>
           <p id="price">{{ price }} €</p>
@@ -113,6 +130,7 @@ const cyclelist = computed(() => {
 .offer {
   display: flex;
   gap: 20px;
+  padding-top: 30px;
 }
 .partOne {
   width: 65%;

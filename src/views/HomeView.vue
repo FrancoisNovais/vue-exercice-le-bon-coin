@@ -63,7 +63,7 @@ onMounted(async () => {
   text-align: center;
   font-size: 24px;
   font-weight: 600;
-  margin: 30px 0;
+  padding: 30px 0;
 }
 
 .offers {

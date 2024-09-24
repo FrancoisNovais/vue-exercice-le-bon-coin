@@ -24,8 +24,7 @@ body {
   height: 100%;
 }
 main {
-  min-height: calc(100vh - var(--header-height) - var(--footer-height));
-  padding-top: 20px;
+  margin-top: var(--header-height);
 }
 .blanckAvatar {
   width: 30px;

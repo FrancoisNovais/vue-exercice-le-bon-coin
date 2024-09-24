@@ -54,8 +54,9 @@ import AddOffer from '@/components/AddOffer.vue'
 header {
   border-bottom: 1px solid var(--black);
   height: var(--header-height);
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%;
   background-color: white;
 }
 .container {

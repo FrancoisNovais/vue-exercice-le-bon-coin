@@ -28,10 +28,10 @@ import AddOffer from '@/components/AddOffer.vue'
   align-items: center;
   gap: 10px;
 }
-img:first-child {
+.bannerAddOffers img:first-child {
   border-radius: 15px 0 0 15px;
 }
-img:last-child {
+.bannerAddOffers img:last-child {
   border-radius: 0 15px 15px 0;
 }
 </style>
