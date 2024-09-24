@@ -99,6 +99,7 @@ input:focus {
 }
 input::placeholder {
   color: var(--black);
+  font-size: 16px;
 }
 .middle-part svg {
   background-color: var(--orange);
