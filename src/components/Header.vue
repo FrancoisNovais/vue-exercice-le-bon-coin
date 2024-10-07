@@ -137,6 +137,9 @@ input::placeholder {
   border-radius: 7px;
   color: white;
 }
+.right-part {
+  height: 100%;
+}
 .right-part > div {
   display: flex;
   align-items: center;
@@ -158,7 +161,10 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   border: none;
+}
+a {
+  text-decoration: none;
 }
 </style>

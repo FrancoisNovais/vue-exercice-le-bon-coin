@@ -15,4 +15,8 @@ footer {
   justify-content: center;
   background-color: var(--grey-light);
 }
+a {
+  text-decoration: none;
+  font-weight: bold;
+}
 </style>

@@ -121,4 +121,83 @@ const handleSubmit = async () => {
     </div>
   </main>
 </template>
-<style scoped></style>
+<style scoped>
+.container {
+  height: calc(100vh - var(--header-height) - var(--footer-height));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../assets/illustration.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom;
+}
+.container > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 500px;
+  height: 500px;
+  box-shadow: 0 0 7px 1px var(--grey-med);
+  padding: 30px;
+  background-color: white;
+  border-radius: 20px;
+}
+h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+input {
+  border: 1px solid var(--grey);
+  height: 45px;
+  border-radius: 15px;
+  padding-left: 10px;
+}
+.passwordInput {
+  display: flex;
+}
+.passwordInput > div {
+  border: 1px solid var(--grey);
+  display: flex;
+  align-items: center;
+  border-left: none;
+  color: var(--grey);
+  height: 45px;
+  border-radius: 0 15px 15px 0;
+  width: 40px;
+  padding: 10px;
+}
+.passwordInput input {
+  flex: 1;
+  border-radius: 15px 0 0 15px;
+}
+button {
+  background-color: var(--orange);
+  border: none;
+  border-radius: 15px;
+  height: 45px;
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+a {
+  font-weight: bold;
+}
+</style>

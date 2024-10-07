@@ -35,3 +35,6 @@ main {
   border-radius: 50%;
   font-weight: bold;
 }
+a {
+  color: inherit;
+}
