@@ -21,7 +21,6 @@ body {
 .container {
   width: 1050px;
   margin: 0 auto;
-  height: 100%;
 }
 main {
   margin-top: var(--header-height);

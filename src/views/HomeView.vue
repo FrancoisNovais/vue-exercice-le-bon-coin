@@ -59,6 +59,9 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+main {
+  padding-bottom: 30px;
+}
 .topLine {
   text-align: center;
   font-size: 24px;

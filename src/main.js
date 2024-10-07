@@ -1,6 +1,6 @@
 import './assets/main.css'
 
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import App from './App.vue'
 import router from './router'
 
@@ -12,33 +12,54 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* Import des icônes de type 'solid' */
 import {
-  faAngleLeft,
-  faAngleRight,
   faCheckDouble,
+  faMapMarkerAlt,
   faCircle,
-  faMapPin,
-  faSearch
+  faSearch,
+  faArrowRight,
+  faAngleLeft,
+  faAngleRight
 } from '@fortawesome/free-solid-svg-icons'
 
 /* Import de l'icône de type 'regular' */
-import { faClock, faHeart, faPlusSquare, faUser } from '@fortawesome/free-regular-svg-icons'
+import {
+  faPlusSquare,
+  faHeart,
+  faClock,
+  faUser,
+  faEyeSlash,
+  faEye
+} from '@fortawesome/free-regular-svg-icons'
 
 /* Ajout de ces icônes à la bibliothèque de votre projet */
 library.add(
-  faSearch,
   faPlusSquare,
-  faUser,
-  faCircle,
   faHeart,
-  faMapPin,
   faCheckDouble,
   faClock,
+  faMapMarkerAlt,
+  faUser,
+  faCircle,
+  faSearch,
+  faArrowRight,
+  faEyeSlash,
   faAngleLeft,
-  faAngleRight
+  faAngleRight,
+  faEye
 )
-
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(router)
+
+const userInfos = ref({
+  username: '',
+  token: ''
+})
+const changeUserInfos = (infos) => {
+  userInfos.value = infos
+}
+
+// Création du 'provider'
+app.provide('GlobalStore', { userInfos: userInfos, changeUserInfos: changeUserInfos })
 
 app.mount('#app')

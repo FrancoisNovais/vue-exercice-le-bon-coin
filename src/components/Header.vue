@@ -1,7 +1,18 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import AddOffer from '@/components/AddOffer.vue'
+import { inject } from 'vue'
+
+const GlobalStore = inject('GlobalStore')
+
+const disconnection = () => {
+  GlobalStore.changeUserInfos({
+    username: '',
+    token: ''
+  })
+}
 </script>
+
 <template>
   <header>
     <div class="container">
@@ -19,10 +30,27 @@ import AddOffer from '@/components/AddOffer.vue'
           </div>
         </div>
         <div class="right-part">
-          <div>
-            <font-awesome-icon :icon="['far', 'user']" />
-            <p>Se connecter</p>
+          <!-- Affichage conditionnel selon si l'utilisateur est connecté ou non -->
+          <div v-if="GlobalStore.userInfos.value.username">
+            <div class="connection">
+              <font-awesome-icon :icon="['far', 'user']" />
+              <p>{{ GlobalStore.userInfos.value.username }}</p>
+            </div>
+
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'arrow-right']"
+                @click="disconnection"
+                class="disconnection"
+              />
+            </div>
           </div>
+
+          <RouterLink :to="{ name: 'login' }" class="connection" v-else>
+            <font-awesome-icon :icon="['far', 'user']" />
+
+            <p>Se connecter</p>
+          </RouterLink>
         </div>
       </div>
 
@@ -111,14 +139,26 @@ input::placeholder {
 }
 .right-part > div {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 20px;
+  height: 100%;
 }
 img {
   width: 140px;
 }
 #circle {
   font-size: 3px;
+}
+.disconnection {
+  cursor: pointer;
+  color: var(--grey);
+}
+.connection {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border: none;
 }
 </style>

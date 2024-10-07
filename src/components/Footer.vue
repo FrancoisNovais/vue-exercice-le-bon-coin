@@ -9,7 +9,6 @@
 
 <style scoped>
 footer {
-  margin-top: 30px;
   height: var(--footer-height);
   display: flex;
   align-items: center;

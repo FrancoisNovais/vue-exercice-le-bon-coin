@@ -127,6 +127,9 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.container {
+  height: calc(100vh - var(--header-height) - var(--footer-height));
+}
 .offer {
   display: flex;
   gap: 20px;
