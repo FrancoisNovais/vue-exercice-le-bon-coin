@@ -6,6 +6,7 @@ import { inject } from 'vue'
 const GlobalStore = inject('GlobalStore')
 
 const disconnection = () => {
+  $cookies.remove('userInfos')
   GlobalStore.changeUserInfos({
     username: '',
     token: ''

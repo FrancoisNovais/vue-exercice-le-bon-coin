@@ -33,11 +33,15 @@ const handleSubmit = async () => {
 
       console.log('SignupView - data>>', data) // Log des données de réponse de l'API
 
-      // Mise à jour du store global avec les infos de l'utilisateur et le token
-      Store.changeUserInfos({
-        username: data.user.username, // Nom d'utilisateur
-        token: data.jwt // Jeton d'authentification (JWT)
-      })
+      // Création de l'objet qui sera stocké dans le fournisseur de dépendance et les cookies
+      const userInfos = {
+        username: data.user.username,
+        token: data.jwt
+      }
+
+      Store.changeUserInfos(userInfos)
+
+      $cookies.set('userInfos', userInfos)
 
       // Redirige l'utilisateur vers la page d'accueil après inscription
       router.push({ name: 'home' })
