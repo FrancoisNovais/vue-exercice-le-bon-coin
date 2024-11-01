@@ -29,11 +29,16 @@ const handleSubmit = async () => {
         }
       )
 
+      // Création de l'objet qui sera stocké dans le fournisseur de dépendance et les cookies
+      const userInfos = {
+        username: data.user.username,
+        token: data.jwt
+      }
+
+      $cookies.set('userInfos', userInfos)
+
       // Mise à jour du store global avec les infos de l'utilisateur et le token
-      Store.changeUserInfos({
-        username: data.user.username, // Nom d'utilisateur
-        token: data.jwt // Jeton d'authentification (JWT)
-      })
+      Store.changeUserInfos(userInfos)
 
       // Redirige l'utilisateur vers la page d'accueil après authentification
       router.push({ name: 'home' })
