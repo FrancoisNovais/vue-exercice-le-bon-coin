@@ -55,11 +55,16 @@ const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(router)
 
+// Dit à toute l'application d'utiliser le package
+app.use(VueCookies, { expires: '7d', secure: 'true', sameSite: 'Lax' })
+
 // Création de la valeur réactive
-const userInfos = ref({
-  username: '',
-  token: ''
-})
+const userInfos = ref(
+  $cookies.get('userInfos') || {
+    username: '',
+    token: ''
+  }
+)
 const changeUserInfos = (infos) => {
   userInfos.value = infos
 }

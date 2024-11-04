@@ -7,6 +7,9 @@ import BtnPublishOffer from './BtnPublishOffer.vue'
 const GlobalStore = inject('GlobalStore')
 
 const disconnection = () => {
+  // Suppression du cookie
+  $cookies.remove('userInfos')
+
   GlobalStore.changeUserInfos({
     username: '',
     token: ''

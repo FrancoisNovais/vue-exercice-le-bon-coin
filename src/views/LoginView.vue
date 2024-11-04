@@ -28,10 +28,15 @@ const handleSubmit = async () => {
 
       // console.log('LoginView - data>>', data)
 
-      GlobalStore.changeUserInfos({
+      // Création de l'objet qui sera stocké dans le fournisseur de dépendance et les cookies
+      const userInfos = {
         username: data.user.username,
         token: data.jwt
-      })
+      }
+
+      GlobalStore.changeUserInfos(userInfos)
+
+      $cookies.set('userInfos', userInfos)
 
       router.push({ name: 'home' })
     } else {
