@@ -109,7 +109,7 @@ const formatedPrice = computed(() => {
           <p>{{ offerInfos.attributes.description }}</p>
 
           <p class="city">
-            <font-awesome-icon :icon="['fas', 'location-dot']" /> Agon-Coutainville (50230)
+            <font-awesome-icon :icon="['fas', 'map-marker-alt']" /> Agon-Coutainville (50230)
           </p>
         </div>
 
@@ -119,6 +119,7 @@ const formatedPrice = computed(() => {
               <img
                 :src="offerInfos.attributes.owner.data.attributes.avatar.data.attributes.url"
                 :alt="offerInfos.attributes.owner.data.attributes.username"
+                v-if="offerInfos.attributes.owner.data.attributes.avatar.data"
               />
               <p>{{ offerInfos.attributes.owner.data.attributes.username }}</p>
             </div>

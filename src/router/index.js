@@ -10,7 +10,14 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      props: (route) => {
+        return {
+          sort: route.query.sort || '',
+          pricemin: route.query.pricemin || '',
+          pricemax: route.query.pricemax || ''
+        }
+      }
     },
     {
       path: '/offer/:id',

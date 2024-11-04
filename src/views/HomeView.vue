@@ -1,28 +1,43 @@
 <script setup>
 import OfferCard from '../components/OfferCard.vue'
-import TimeToSell from '@/components/TimeToSell.vue'
+import TimeToSell from '../components/TimeToSell.vue'
+import Filters from '../components/Filters.vue'
 
 import axios from 'axios'
 
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
+
+const props = defineProps(['sort', 'pricemin', 'pricemax'])
+console.log('Props >>>', props)
 
 const offersList = ref({})
 
 onMounted(async () => {
-  try {
-    //  Destruction de la clé 'data'. Pour rappel, les données reçus d'une requête faite avec axios se trouve toujours à la clé 'data'
-    const { data } = await axios.get(
-      `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=pictures&populate[1]=owner.avatar`
-    )
+  watchEffect(async () => {
+    try {
+      // Les filtres des prix ne peuvent pas être sans valeur sinon la requête crash. Donc on créé une string vide qui stockera le filtre prix minimum et prix maximum seulement s'ils sont demandés
+      let priceFilters = ''
 
-    // Pour vérifer les informations reçues
-    // console.log('HomeView - data >>>', data)
+      if (props.pricemax) {
+        priceFilters += `&filters[price][$lte]=${props.pricemax}`
+      }
+      if (props.pricemin) {
+        priceFilters += `&filters[price][$gte]=${props.pricemin}`
+      }
 
-    offersList.value = data
-  } catch (error) {
-    // Affiche l'erreur dans la console du navigateur
-    console.log('HomeView - catch >>>', error)
-  }
+      const { data } = await axios.get(
+        `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=pictures&populate[1]=owner.avatar${priceFilters}&sort=${props.sort}`
+      )
+
+      // Pour vérifer les informations reçues
+      console.log('HomeView - data >>>', data)
+
+      offersList.value = data
+    } catch (error) {
+      // Affiche l'erreur dans la console du navigateur
+      console.log('HomeView - catch >>>', error)
+    }
+  })
 })
 </script>
 
@@ -33,6 +48,7 @@ onMounted(async () => {
       <p v-if="!offersList.data" class="loader">Chargement en cours ...</p>
 
       <div v-else>
+        <Filters :sort="sort" :pricemin="pricemin" :pricemax="pricemax" />
         <p class="topLine">
           Des millions de petites annonces et autant d’occasions de se faire plaisir
         </p>

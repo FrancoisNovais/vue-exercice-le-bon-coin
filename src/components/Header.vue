@@ -30,7 +30,7 @@ const disconnection = () => {
 
           <div>
             <input type="text" name="search" id="search" placeholder="Rechercher sur leboncoin" />
-            <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+            <font-awesome-icon :icon="['fas', 'search']" />
           </div>
         </div>
 
@@ -43,7 +43,7 @@ const disconnection = () => {
 
             <div>
               <font-awesome-icon
-                :icon="['fas', 'arrow-right-from-bracket']"
+                :icon="['fas', 'sign-out-alt']"
                 @click="disconnection"
                 class="disconnection"
               />
@@ -152,6 +152,9 @@ img {
   padding: 8px;
   box-sizing: content-box;
   border-radius: 7px;
+}
+.rightPart svg {
+  color: black;
 }
 .middlePart input::placeholder {
   color: var(--black);
