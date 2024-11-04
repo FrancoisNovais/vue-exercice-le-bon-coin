@@ -1,7 +1,7 @@
 <template>
   <footer>
     <p>
-      Made by <a href="https://github.com/FrancoisNovais">François</a> with
+      Made by <a href="https://www.lereacteur.io/">Le Reacteur</a> with
       <a href="https://vuejs.org/">Vue.js</a>
     </p>
   </footer>
@@ -16,7 +16,6 @@ footer {
   background-color: var(--grey-light);
 }
 a {
-  text-decoration: none;
   font-weight: bold;
 }
 </style>

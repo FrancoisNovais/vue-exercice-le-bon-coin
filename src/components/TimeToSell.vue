@@ -1,37 +1,44 @@
 <script setup>
-import AddOffer from '@/components/AddOffer.vue'
+import BtnPublishOffer from './BtnPublishOffer.vue'
 </script>
+
 <template>
-  <div class="bannerAddOffers">
-    <img src="../assets/onde-corail.svg" alt="Onde corail" />
+  <div class="bloc">
+    <img src="../assets/img/onde-corail.svg" alt="" />
+
     <div>
       <p>C'est le moment de vendre</p>
-      <AddOffer />
+
+      <BtnPublishOffer />
     </div>
-    <img src="../assets/feuille-bleue.svg" alt="Feuille bleue" />
+
+    <img src="../assets/img/feuille-bleue.svg" alt="" />
   </div>
 </template>
-<style>
-.bannerAddOffers {
+
+<style scoped>
+.bloc {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: var(--orange-pale);
-  border-radius: 15px;
-  margin-bottom: 20px;
+  border-radius: 20px;
+  margin-bottom: 35px;
 }
-.bannerAddOffers p {
-  font-size: 20px;
-  font-weight: bold;
-}
-.bannerAddOffers > div {
+.bloc > div {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+
+  font-weight: bold;
 }
-.bannerAddOffers img:first-child {
+p {
+  font-size: 20px;
+}
+img:first-child {
   border-radius: 15px 0 0 15px;
 }
-.bannerAddOffers img:last-child {
+img:last-child {
   border-radius: 0 15px 15px 0;
 }
 </style>

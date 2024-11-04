@@ -50,26 +50,21 @@ library.add(
   faAngleRight,
   faEye
 )
+
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(router)
 
 // Création de la valeur réactive
-const userInfos = ref(
-  $cookies.get('userInfos') || {
-    username: '',
-    token: ''
-  }
-)
-
+const userInfos = ref({
+  username: '',
+  token: ''
+})
 const changeUserInfos = (infos) => {
   userInfos.value = infos
 }
 
 // Création du 'provider'
 app.provide('GlobalStore', { userInfos: userInfos, changeUserInfos: changeUserInfos })
-
-// Dit à toute l'application d'utiliser le package
-app.use(VueCookies, { expires: '7d', secure: 'true', sameSite: 'Lax' })
 
 app.mount('#app')

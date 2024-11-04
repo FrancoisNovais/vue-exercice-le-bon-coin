@@ -1,15 +1,11 @@
 <script setup>
-// Import du package 'axios'
-import axios from 'axios'
-
-// Import des components'
-import OfferCard from '@/components/OfferCard.vue'
+import OfferCard from '../components/OfferCard.vue'
 import TimeToSell from '@/components/TimeToSell.vue'
 
-// Import du hook
+import axios from 'axios'
+
 import { onMounted, ref } from 'vue'
 
-// Initialisation de la valeur réactive à un object vide
 const offersList = ref({})
 
 onMounted(async () => {
@@ -19,14 +15,13 @@ onMounted(async () => {
       `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=pictures&populate[1]=owner.avatar`
     )
 
-    // Visualisation des données reçus dans la console du navigateur
-    console.log('Data >>>', data)
+    // Pour vérifer les informations reçues
+    // console.log('HomeView - data >>>', data)
 
-    // Transmission des données à la valeur réactive 'offersList'
     offersList.value = data
   } catch (error) {
-    // Visualisation de l'erreur dans la console du navigateur
-    console.log('catch >>>', error)
+    // Affiche l'erreur dans la console du navigateur
+    console.log('HomeView - catch >>>', error)
   }
 })
 </script>
@@ -34,42 +29,49 @@ onMounted(async () => {
 <template>
   <main>
     <div class="container">
-      <p class="topLine">
-        Des millions de petites annonces et autant d'occasions de se faire plaisir
-      </p>
+      <!-- Affichage du loaded tant que les informations de la requête n'ont pas été reçu et transmis à la 'ref' -->
+      <p v-if="!offersList.data" class="loader">Chargement en cours ...</p>
 
-      <TimeToSell />
+      <div v-else>
+        <p class="topLine">
+          Des millions de petites annonces et autant d’occasions de se faire plaisir
+        </p>
 
-      <!-- SI la valeur reactive est un tableau vide, alors nous affichons le texte "En cours de chargement..." -->
-      <p v-if="!offersList.data">En cours de chargement ...</p>
+        <TimeToSell />
 
-      <!-- SINON nous affichons la liste -->
-      <div v-else class="offers">
-        <!-- Appel du composant offerCart -->
-
-        <OfferCard
-          v-for="offer in offersList.data"
-          :key="offer.id"
-          :offerInfos="offer.attributes"
-          :id="offer.id"
-        />
+        <div class="offersBloc">
+          <!-- Affichage de toutes les cartes -->
+          <OfferCard
+            v-for="offer in offersList.data"
+            :key="offer.id"
+            :offerInfos="offer.attributes"
+            :id="offer.id"
+          />
+        </div>
       </div>
     </div>
   </main>
 </template>
 
 <style scoped>
-main {
-  padding-bottom: 30px;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  padding-bottom: 40px;
+}
+.loader {
+  font-size: 32px;
+  font-weight: bold;
 }
 .topLine {
   text-align: center;
   font-size: 24px;
   font-weight: 600;
-  padding: 30px 0;
+  margin: 30px 0;
 }
-
-.offers {
+.offersBloc {
   display: flex;
   flex-wrap: wrap;
   gap: 40px 15px;

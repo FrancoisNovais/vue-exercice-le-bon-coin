@@ -1,26 +1,23 @@
 <script setup>
-import { RouterLink, useRouter } from 'vue-router' // Importation pour gérer la navigation avec Vue Router
-import { ref, inject } from 'vue' // ref pour les variables réactives, inject pour accéder aux dépendances globales
-import axios from 'axios' // Axios pour effectuer des requêtes HTTP
+import { RouterLink, useRouter } from 'vue-router'
+import { ref, inject } from 'vue'
+import axios from 'axios'
 
-const router = useRouter() // Utilisation du router pour la navigation
-const Store = inject('GlobalStore') // Récupération du store global pour stocker les infos utilisateur
+const router = useRouter()
 
-// Variables réactives pour stocker les valeurs du formulaire et l'état du composant
-const email = ref('') // Email
-const password = ref('') // Mot de passe
-const isSubmitting = ref(false) // Indicateur pour savoir si le formulaire est en cours de soumission
-const errorMessage = ref('') // Message d'erreur en cas de problème
-const displayPassword = ref(false) // Contrôle l'affichage du mot de passe (texte ou caché)
+const GlobalStore = inject('GlobalStore')
 
-// Fonction pour gérer la soumission du formulaire
+const email = ref('')
+const password = ref('')
+const displayPassword = ref(false)
+const isSubmitting = ref(false)
+const errorMessage = ref('')
+
 const handleSubmit = async () => {
   try {
-    isSubmitting.value = true // Active l'état de soumission
+    isSubmitting.value = true
 
-    // Vérifie si tous les champs sont remplis
     if (email.value && password.value) {
-      // Envoi d'une requête POST à l'API pour authentifier l'utilisateur
       const { data } = await axios.post(
         'https://site--strapileboncoin--2m8zk47gvydr.code.run/api/auth/local',
         {
@@ -29,36 +26,26 @@ const handleSubmit = async () => {
         }
       )
 
-      // Création de l'objet qui sera stocké dans le fournisseur de dépendance et les cookies
-      const userInfos = {
+      // console.log('LoginView - data>>', data)
+
+      GlobalStore.changeUserInfos({
         username: data.user.username,
         token: data.jwt
-      }
+      })
 
-      $cookies.set('userInfos', userInfos)
-
-      // Mise à jour du store global avec les infos de l'utilisateur et le token
-      Store.changeUserInfos(userInfos)
-
-      // Redirige l'utilisateur vers la page d'accueil après authentification
       router.push({ name: 'home' })
     } else {
-      // Affiche un message d'erreur si les champs ne sont pas remplis
       errorMessage.value = 'Veuillez remplir tous les champs'
     }
   } catch (error) {
-    // Gestion des erreurs de la requête
     console.log('LoginView - catch>>', error)
-
     if (error.response) {
-      // Affiche le message d'erreur renvoyé par l'API
       errorMessage.value = error.response.data.error.message
     } else {
-      // Affiche un message d'erreur générique
       errorMessage.value = 'Un problème est survenu, veuillez essayer à nouveau'
     }
   }
-  // Réinitialise l'état de soumission après la tentative
+
   isSubmitting.value = false
 }
 </script>
@@ -69,31 +56,38 @@ const handleSubmit = async () => {
       <div>
         <div>
           <h2>Bonjour !</h2>
-          <p>Connectez-vous pour découvrir toutes nos fonctionnalités.</p>
+
+          <h1>Connectez-vous pour découvrir toutes nos fonctionnalités.</h1>
         </div>
-        <!-- Formulaire d'inscription -->
+
         <form @submit.prevent="handleSubmit">
           <div>
-            <label for="email">E-mail *</label>
-            <!-- Champ pour l'email -->
-            <!-- v-model="email" - Liaison avec la variable réactive `email` -->
-            <!-- @input="() => (errorMessage = '')" - Réinitialise le message d'erreur à chaque saisie -->
-            <input type="email" id="email" v-model="email" />
+            <label for="email">E-mail <span>*</span></label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              v-model="email"
+              @input="() => (errorMessage = '')"
+            />
+            <!-- 👆 Bonus 2 - Fonction déclenchée à chaque modification du champ de saisie pour vider le message d'erreur -->
           </div>
+
           <div>
-            <label for="password">Mot de passe *</label>
+            <label for="password">Mot de passe <span>*</span></label>
             <div class="passwordInput">
-              <!-- Champ pour le mot de passe avec possibilité d'afficher/masquer -->
-              <!-- :type="displayPassword ? 'text' : 'password'" - Change le type selon la valeur de `displayPassword` -->
+              <!-- 👇 Bonus 1 - Changement du type de l'input selon la valeur de le 'ref' pour rendre visible ou non les caractères entrés dans le champ -->
               <input
                 :type="displayPassword ? 'text' : 'password'"
+                name="password"
                 id="password"
                 v-model="password"
                 @input="() => (errorMessage = '')"
               />
+              <!-- 👆 Bonus 2 - Fonction déclenchée à chaque modification du champ de saisie pour vider le message d'erreur -->
+
+              <!-- Bonus 1 - affichage conditionnel de l'icône -->
               <div>
-                <!-- Icones pour afficher ou masquer le mot de passe -->
-                <!-- @click="() => (displayPassword = !displayPassword)" - Bascule entre l'affichage/masquage du mot de passe -->
                 <font-awesome-icon
                   :icon="['far', 'eye']"
                   v-if="displayPassword"
@@ -108,63 +102,62 @@ const handleSubmit = async () => {
             </div>
           </div>
 
-          <!-- Bouton de soumission -->
-          <!-- Affichage conditionnel selon si la soumission du formulaire est en cours ou non -->
           <button type="button" v-if="isSubmitting">Connexion en cours ...</button>
           <button v-else>Se connecter <font-awesome-icon :icon="['fas', 'arrow-right']" /></button>
 
-          <!-- Affichage du message d'erreur si `errorMessage` contient une valeur -->
           <p v-if="errorMessage">{{ errorMessage }}</p>
         </form>
 
-        <!-- Lien vers la page de connexion pour les utilisateurs déjà inscrits -->
         <p>
           Envie de nous rejoindre ?
-          <RouterLink :to="{ name: 'signup' }"> Créer un compte </RouterLink>
+          <RouterLink :to="{ name: 'signup' }">Créer un compte</RouterLink>
         </p>
       </div>
     </div>
   </main>
 </template>
+
 <style scoped>
 .container {
   height: calc(100vh - var(--header-height) - var(--footer-height));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url(../assets/illustration.png);
+  background-image: url('../assets/img/login-illustration.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom;
+  display: flex;
+  /* Le mot clé 'safe' permet à cette propriété de repasser automatiquement ) la valeur 'flex-start' si la hauteur devient insuffisante. Cela évitera à l'utilisateur de ne pas pouvoir scroller pour voir le haut et le bas du bloc.  */
+  align-items: safe center;
+  justify-content: center;
 }
 .container > div {
+  box-shadow: 0 0 7px 1px var(--grey-med);
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  height: 490px;
+  width: 480px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 500px;
-  height: 500px;
-  box-shadow: 0 0 7px 1px var(--grey-med);
-  padding: 30px;
-  background-color: white;
-  border-radius: 20px;
 }
 h2 {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
-
 form {
+  flex: 1;
+  margin: 40px 0;
   display: flex;
   flex-direction: column;
-  flex: 1;
   justify-content: space-between;
-  margin: 30px 0;
 }
 form > div {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+}
+label {
+  margin-bottom: 7px;
 }
 input {
   border: 1px solid var(--grey);
@@ -174,6 +167,10 @@ input {
 }
 .passwordInput {
   display: flex;
+}
+.passwordInput input {
+  border-radius: 15px 0 0 15px;
+  flex: 1;
 }
 .passwordInput > div {
   border: 1px solid var(--grey);
@@ -186,23 +183,32 @@ input {
   width: 40px;
   padding: 10px;
 }
-.passwordInput input {
-  flex: 1;
-  border-radius: 15px 0 0 15px;
+span {
+  color: var(--grey);
 }
 button {
   background-color: var(--orange);
   border: none;
   border-radius: 15px;
   height: 45px;
-  color: #fff;
-  font-weight: 700;
+  color: white;
+  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
 }
+button > svg {
+  font-size: 14px;
+}
+form > p {
+  color: var(--orange);
+}
+p {
+  text-align: center;
+}
 a {
   font-weight: bold;
+  text-decoration: underline;
 }
 </style>
